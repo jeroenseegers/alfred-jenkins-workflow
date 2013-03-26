@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>nl.jeroenseegers.Alfred.Jenkins</string>
+	<key>connections</key>
+	<dict>
+		<key>996B61CE-E2F3-41B3-9E99-439810B91F90</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>FFD79197-A443-469B-BEF5-0EE6559E04B7</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Jeroen Seegers (@RevellNL)</string>
+	<key>description</key>
+	<string>Get jenkins status reports in Alfred</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Jenkins</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>jenkins</string>
+				<key>runningsubtext</key>
+				<string>Fetching jobs, please hold on...</string>
+				<key>script</key>
+				<string>import jenkins
+
+# Set the URL to you Jenkins CI instance here
+jenkins.set_url("http://URL_TO_YOUR_JENKINS_INSTANCE")
+
+print(jenkins.execute("{query}"))</string>
+				<key>subtext</key>
+				<string>Fetch Jenkins jobs from specified server.</string>
+				<key>title</key>
+				<string>Jenkins</string>
+				<key>type</key>
+				<integer>3</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>996B61CE-E2F3-41B3-9E99-439810B91F90</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>plusspaces</key>
+				<false/>
+				<key>url</key>
+				<string>{query}</string>
+				<key>utf8</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openurl</string>
+			<key>uid</key>
+			<string>FFD79197-A443-469B-BEF5-0EE6559E04B7</string>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>996B61CE-E2F3-41B3-9E99-439810B91F90</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+		<key>FFD79197-A443-469B-BEF5-0EE6559E04B7</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>http://twitter.com/RevellNL</string>
+</dict>
+</plist>
