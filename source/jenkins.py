@@ -39,6 +39,7 @@ def execute(query):
         feedback.add_item("status {query}", "Get the status for builds corresponding with {query}", "", "no", "status")
         return feedback
 
+
 def get_status(terms=""):
     """Retrieve the current status of the jobs matching the given terms
 
@@ -55,13 +56,20 @@ def get_status(terms=""):
             for job in data["jobs"]:
                 if re.search(search_regex, job["name"]) != None:
                     title = job["name"]
-                    feedback.add_item(title, "", job["url"], "yes", "", "images/"+job["color"]+".png")
+                    if "healthReport" in job and len(job["healthReport"]) > 0:
+                        subtext = job["healthReport"][0]["description"]
+                        icon = health_to_icon(job["healthReport"][0]["score"], job["color"])
+                    else:
+                        subtext = ""
+                        icon = "images/"+job["color"]+".png"
+                    feedback.add_item(title, subtext, job["url"], "yes", "", icon)
         else:
             feedback.add_item("No results found", "I'm sorry, I failed to find what you were looking for", "", "no")
     else:
         feedback.add_item("An error occured", "It seems I made a mistake somewhere, please forgive me", "", "no")
 
     return feedback
+
 
 def get_data_from_url(url=""):
     """Retrieve data from the configured or given URL
@@ -76,7 +84,7 @@ def get_data_from_url(url=""):
         url = CONFIGURED_URL
 
     try:
-        request = urllib.urlopen(url+"/api/json")
+        request = urllib.urlopen(url+"/api/json?tree=jobs[name,url,color,healthReport[description,score,iconUrl]]")
         if request.getcode() == 200:
             response = request.read()
             returnData = json.loads(response)
@@ -86,6 +94,34 @@ def get_data_from_url(url=""):
         returnData = None
 
     return returnData
+
+
+def health_to_icon(health, color):
+    """Return the correct icon corresponding with the health/color
+
+    Keyword arguments
+    health  -- The health of the job
+    color   -- The color of the job
+
+    """
+    if color == "disabled":
+        color = "grey"
+
+    if health >= 0 and health <= 20:
+        icon = "images/health-00to19-"+color+".png"
+    elif health > 20 and health <= 40:
+        icon = "images/health-20to39-"+color+".png"
+    elif health > 40 and health <= 60:
+        icon = "images/health-40to59-"+color+".png"
+    elif health > 60 and health <= 80:
+        icon = "images/health-60to79-"+color+".png"
+    elif health > 80:
+        icon = "images/health-80plus-"+color+".png"
+    else:
+        icon = "images/"+color+".png"
+
+    return icon
+
 
 def set_url(url):
     """Set the global URL to use
