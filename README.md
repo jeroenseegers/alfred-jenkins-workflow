@@ -9,6 +9,8 @@ You can install this workflow by dowloading the [Jenkins.alfredworkflow](https:/
 
 After adding it to your workflow collection, be sure to set the correct URL to your Jenkins CI instance by double-clicking the `Script Filter` and replacing `URL_TO_YOUR_JENKINS_INSTANCE` with the actual URL of your Jenkins CI instance.
 
+If your Jenkins instance requires authentication, just set the url to `http://USERNAME:PASSWORD@url_to_your_instance.com/`.
+
 ## Usage
 
 The commands currently supported by this workflow are:
